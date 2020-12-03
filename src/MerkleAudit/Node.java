@@ -1,9 +1,6 @@
-package com.company;
-
-import com.sun.deploy.util.ArrayUtil;
+package MerkleAudit;
 
 import java.security.MessageDigest;
-import java.util.Arrays;
 
 public class Node
 {

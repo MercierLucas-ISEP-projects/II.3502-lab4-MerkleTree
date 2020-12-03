@@ -4,3 +4,5 @@ A third one
 Last event for now
 test
 Event
+Appended event #1
+appended event #2

@@ -1,4 +1,4 @@
-package com.company;
+package MerkleAudit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,6 +44,15 @@ public class Helper
         {
             System.out.println(txt);
         }
+    }
+    public static void showArray(byte[] a)
+    {
+        StringBuilder builder = new StringBuilder();
+        for(byte element : a)
+        {
+            builder.append(element+" ");
+        }
+        System.out.println(builder.toString());
     }
 
     public static String[] concatArrays(String[] a, String[] b)

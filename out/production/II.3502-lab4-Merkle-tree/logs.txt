@@ -3,6 +3,4 @@ Another event occured
 A third one
 Last event for now
 test
-a
-a
-a
+Event
