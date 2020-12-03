@@ -6,6 +6,7 @@ import java.util.List;
 public class CompleteMerkleTree
 {
     Node[][] _layers;
+
     private int _nLeaves;
 
     public CompleteMerkleTree(byte[][] events)

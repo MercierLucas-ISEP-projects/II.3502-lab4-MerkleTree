@@ -50,7 +50,7 @@ public class LogServer extends UnicastRemoteObject implements LogServerInterface
             return null;//throw new Exception("The id of the desired event must be lower than number of events in the tree");
         }
 
-        List<byte[]> path =_tree.getPathToLeave(eventID);
+        List<byte[]> path =_tree.getPathToLeaf(eventID);
         System.out.println("Found path to event"+eventID+" in "+path.size()+" elements");
 
         return path;

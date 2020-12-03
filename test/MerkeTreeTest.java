@@ -1,14 +1,26 @@
 import MerkleAudit.Helper;
 import MerkleAudit.MerkleTree;
 
+import java.util.List;
+
 public class MerkeTreeTest
 {
     public static void main(String[] args)
     {
         assertTreeSize(5);
         assertSizeAfterAppend();
+        assertPathToLeafNotNullAndCorrectSize(4);
 
         System.out.println("All tests passed");
+    }
+
+    private static void assertPathToLeafNotNullAndCorrectSize(int size)
+    {
+        MerkleTree tree = new MerkleTree(getDummies(size));
+        List<byte[]> path = tree.getPathToLeaf(1);
+        assert path != null;
+        assert  path.size() > 0;
+        assert path.size() == tree.getNLayers() - 1 ;
     }
 
     private static void assertTreeSize(int size)

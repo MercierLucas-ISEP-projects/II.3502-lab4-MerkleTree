@@ -103,27 +103,27 @@ public class MerkleTree
         return rootChilds;
     }
 
-    public List<byte[]> getPathToLeave(int leafIndex)
+    public List<byte[]> getPathToLeaf(int leafIndex)
     {
         List<byte[]> result = new ArrayList<>();
         Node nextNode = getRoot(); // start from the root
 
         for(int layerIdx = _tree.size() - 1; layerIdx >= 1; layerIdx--)
         {
-            //System.out.println("Searching at layer "+layerIdx+" with node "+nextNode.getIndexRange());
+            System.out.println("Searching at layer "+layerIdx+" with node "+nextNode.getIndexRange());
             Node leftNode = nextNode.getLeftNode();
 
             if(leftNode.containsIndex(leafIndex))
             {
-                nextNode = leftNode;
                 result.add(nextNode.getRightNode().getHash());
-                //System.out.println("Moved to the left");
+                nextNode = leftNode;
+                System.out.println("Moved to the left");
             }
             else
             {
                 nextNode = nextNode.getRightNode();
                 result.add(leftNode.getHash());
-                //System.out.println("Moved to the right");
+                System.out.println("Moved to the right");
             }
         }
 
@@ -133,5 +133,10 @@ public class MerkleTree
 
     public int getNLeaves() {
         return _nLeaves;
+    }
+
+    public int getNLayers()
+    {
+        return _tree.size();
     }
 }
