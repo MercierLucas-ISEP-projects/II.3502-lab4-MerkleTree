@@ -13,6 +13,9 @@ public class Node
 
     private boolean _isLeave;
 
+    private final byte LEAF_HEADER = 0x00;
+    private final byte NODE_HEADER = 0x01;
+
     private byte[] _hash;
 
     public Node(Node leftNode,Node rightNode,int startIndex, int endIndex)
@@ -22,8 +25,8 @@ public class Node
         _startIndex = startIndex;
         _endIndex = endIndex;
         _isLeave = false;
-        byte[] concat = Helper.concatArrays(leftNode.getHash(), rightNode.getHash());
-        computeHash(concat);
+        byte[] nodeContent = Helper.concatArrays(Helper.concatArrays(new byte[]{NODE_HEADER},leftNode.getHash()), rightNode.getHash());
+        computeHash(nodeContent);
     }
 
     public Node(byte[] dataToHash,int startIndex, int endIndex)
@@ -31,7 +34,9 @@ public class Node
         _startIndex = startIndex;
         _endIndex = endIndex;
         _isLeave = true;
-        computeHash(dataToHash);
+
+        byte[] leafContent = Helper.concatArrays(new byte[]{LEAF_HEADER},dataToHash);
+        computeHash(leafContent);
     }
 
     private void computeHash(byte[] dataToHash)
@@ -49,7 +54,9 @@ public class Node
 
     public boolean containsIndex(int index)
     {
-        return _startIndex >= index && index <= _endIndex;
+        //System.out.println(getStartIndex()+" "+index+" "+getEndIndex());
+        //System.out.println(_startIndex >= index && index <= _endIndex);
+        return index >=_startIndex && index <= _endIndex;
     }
 
     public byte[] getHash()

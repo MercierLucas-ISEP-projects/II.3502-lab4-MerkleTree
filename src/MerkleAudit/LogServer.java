@@ -47,10 +47,11 @@ public class LogServer extends UnicastRemoteObject implements LogServerInterface
     {
         if(eventID > _tree.getNLeaves())
         {
+            System.out.println("Incorrect id");
             return null;//throw new Exception("The id of the desired event must be lower than number of events in the tree");
         }
 
-        List<byte[]> path =_tree.getPathToLeaf(eventID);
+        List<byte[]> path = _tree.getPathToLeaf(eventID);
         System.out.println("Found path to event"+eventID+" in "+path.size()+" elements");
 
         return path;
@@ -66,7 +67,13 @@ public class LogServer extends UnicastRemoteObject implements LogServerInterface
         hashes.add(baseTreeRoots[1]);
         hashes.add(extendedTree.getRoot().getRightNode().getHash());
 
-        return null;
+        return hashes;
+    }
+
+    @Override
+    public boolean verifyEvent(int eventID) throws RemoteException
+    {
+        return false;
     }
 
     @Override

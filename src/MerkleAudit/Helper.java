@@ -26,6 +26,19 @@ public class Helper
         return result;
     }
 
+    public static byte[] stringToByte(String text)
+    {
+        try
+        {
+            return text.getBytes("UTF-8");
+        }
+        catch (Exception e)
+        {
+            System.out.println("Unexpected charset");
+            return null;
+        }
+    }
+
     public static int tryParseToInt(String string)
     {
         try

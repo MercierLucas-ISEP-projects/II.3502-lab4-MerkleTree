@@ -1,5 +1,7 @@
 package MerkleAudit;
 
+import sun.plugin.com.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,9 @@ public class MerkleTree
 {
     List<List<Node>> _tree;
     private int _nLeaves;
+
+    private final byte LEFT_NODE = 0;
+    private final byte RIGHT_NODE = 1;
 
     public MerkleTree(byte[][] events)
     {
@@ -42,7 +47,7 @@ public class MerkleTree
 
         for(int eventID = 0; eventID < events.length; eventID++)
         {
-            leaves.add(new Node(events[eventID],eventID+1,eventID+1));
+            leaves.add(new Node(events[eventID], eventID+1,eventID+1));
         }
         tree.add(leaves);
 
@@ -105,6 +110,7 @@ public class MerkleTree
 
     public List<byte[]> getPathToLeaf(int leafIndex)
     {
+        //System.out.println("Looking for index "+leafIndex);
         List<byte[]> result = new ArrayList<>();
         Node nextNode = getRoot(); // start from the root
 
@@ -113,20 +119,27 @@ public class MerkleTree
             System.out.println("Searching at layer "+layerIdx+" with node "+nextNode.getIndexRange());
             Node leftNode = nextNode.getLeftNode();
 
+            //System.out.println("Left node "+leftNode.getStartIndex()+leftNode.getEndIndex());
+            //System.out.println("Right node "+nextNode.getRightNode().getStartIndex()+nextNode.getRightNode().getEndIndex());
+
             if(leftNode.containsIndex(leafIndex))
             {
-                result.add(nextNode.getRightNode().getHash());
+                byte[] rightHash = Helper.concatArrays(new byte[]{RIGHT_NODE},nextNode.getRightNode().getHash());
+                result.add(rightHash);
+
                 nextNode = leftNode;
                 System.out.println("Moved to the left");
             }
             else
             {
+                byte[] leftHash = Helper.concatArrays(new byte[]{LEFT_NODE},leftNode.getHash());
                 nextNode = nextNode.getRightNode();
-                result.add(leftNode.getHash());
+                result.add(leftHash);
                 System.out.println("Moved to the right");
             }
         }
 
+        System.out.println("Path "+result.size());
         return result;
     }
 

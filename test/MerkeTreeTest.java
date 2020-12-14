@@ -7,9 +7,9 @@ public class MerkeTreeTest
 {
     public static void main(String[] args)
     {
-        assertTreeSize(5);
+        assertTreeSize(6);
         assertSizeAfterAppend();
-        assertPathToLeafNotNullAndCorrectSize(4);
+        assertPathToLeafNotNullAndCorrectSize(6);
 
         System.out.println("All tests passed");
     }
@@ -17,7 +17,7 @@ public class MerkeTreeTest
     private static void assertPathToLeafNotNullAndCorrectSize(int size)
     {
         MerkleTree tree = new MerkleTree(getDummies(size));
-        List<byte[]> path = tree.getPathToLeaf(1);
+        List<byte[]> path = tree.getPathToLeaf(3);
         assert path != null;
         assert  path.size() > 0;
         assert path.size() == tree.getNLayers() - 1 ;
